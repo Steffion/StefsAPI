@@ -24,7 +24,7 @@ public class StefsAPI {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "5.0.1";
+	public static String engineVersion = "5.0.2";
 	public static String engineAuthors = "Steffion";
 
 	public static ArrayList<String> newConfigs = new ArrayList<String>();
@@ -149,7 +149,8 @@ public class StefsAPI {
 		}
 
 		public static String replaceColours(String message) {
-			return message.replaceAll("(&([a-fk-or0-9]))", "\u00A7$2");
+			return message.replaceAll("(&([a-fk-or0-9]))", "\u00A7$2")
+					.replaceAll("&u", "\n");
 		}
 
 		public static String replacePrefixes(String message) {

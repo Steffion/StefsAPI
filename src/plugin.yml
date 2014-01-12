@@ -1,0 +1,19 @@
+name: PLUGINNAME
+main: nl.Steffion.PLUGINNAME.PLUGINNAME
+version: 1.0.0
+authors:
+  - Steffion
+description: Description here.
+load: POSTWORLD
+softdepend: [Essentials, OtherPlugin]
+commands:
+  PLUGINNAME:
+    usage: /<command>
+    description: N/A
+    aliases:
+        - pn
+  test:
+    usage: /<command>
+    description: N/A
+    aliases:
+        - t

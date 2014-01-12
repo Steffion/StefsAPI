@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class BasicCommands {
 	public class UnknownCommand extends ExecutedCommand {
 		@Override
-		public boolean exectue(Player player, String playerName, Command cmd,
+		public boolean execute(Player player, String playerName, Command cmd,
 				String label, String[] args) {
 			StefsAPI.MessageHandler.buildMessage().addSender(playerName)
 					.setMessage("error.commandNotFound", PLUGINNAME.messages)
@@ -19,7 +19,7 @@ public class BasicCommands {
 
 	public class InfoCommand extends ExecutedCommand {
 		@Override
-		public boolean exectue(Player player, String playerName, Command cmd,
+		public boolean execute(Player player, String playerName, Command cmd,
 				String label, String[] args) {
 			StefsAPI.MessageHandler
 					.buildMessage()
@@ -46,7 +46,7 @@ public class BasicCommands {
 
 	public class HelpCommand extends ExecutedCommand {
 		@Override
-		public boolean exectue(Player player, String playerName, Command cmd,
+		public boolean execute(Player player, String playerName, Command cmd,
 				String label, String[] args) {
 			int amountCommands = 0;
 			for (nl.Steffion.PLUGINNAME.StefsAPI.Command command : StefsAPI.commands) {
@@ -185,7 +185,7 @@ public class BasicCommands {
 
 	public class ReloadCommand extends ExecutedCommand {
 		@Override
-		public boolean exectue(Player player, String playerName, Command cmd,
+		public boolean execute(Player player, String playerName, Command cmd,
 				String label, String[] args) {
 			StefsAPI.ConfigHandler.displayNewFiles();
 			PLUGINNAME.config.load();

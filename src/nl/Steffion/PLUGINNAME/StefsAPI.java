@@ -24,7 +24,7 @@ public class StefsAPI {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "5.0.0";
+	public static String engineVersion = "5.0.1";
 	public static String engineAuthors = "Steffion";
 
 	public static ArrayList<String> newConfigs = new ArrayList<String>();
@@ -312,7 +312,7 @@ public class StefsAPI {
 	}
 
 	public static class ExecutedCommand {
-		public boolean exectue(Player player, String playerName,
+		public boolean execute(Player player, String playerName,
 				org.bukkit.command.Command cmd, String label, String[] args) {
 			return true;
 		}

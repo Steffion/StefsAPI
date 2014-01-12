@@ -158,7 +158,7 @@ public class PLUGINNAME extends JavaPlugin implements Listener {
 							command.permission, command.typePermission, true)) {
 						if (config.getFile().getBoolean(
 								"commandEnabled." + command.enabled)) {
-							command.command.exectue(player, playerName, cmd,
+							command.command.execute(player, playerName, cmd,
 									label, args);
 						} else {
 							StefsAPI.MessageHandler
@@ -174,7 +174,7 @@ public class PLUGINNAME extends JavaPlugin implements Listener {
 			}
 		}
 
-		new BasicCommands().new UnknownCommand().exectue(player, playerName,
+		new BasicCommands().new UnknownCommand().execute(player, playerName,
 				cmd, label, args);
 		return true;
 	}

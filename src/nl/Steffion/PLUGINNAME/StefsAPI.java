@@ -24,7 +24,7 @@ public class StefsAPI {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "5.0.2";
+	public static String engineVersion = "5.0.3";
 	public static String engineAuthors = "Steffion";
 
 	public static ArrayList<String> newConfigs = new ArrayList<String>();
@@ -273,11 +273,11 @@ public class StefsAPI {
 		private static StefsAPI api = new StefsAPI();
 
 		public static Command registerCommand(String label, String[] arguments,
-				String[] aliases, String permission,
-				PermissionType typePermission, String helpFromConfig,
-				String enabled, ExecutedCommand command, String usage) {
-			return api.new Command(label, arguments, aliases, permission,
-					typePermission, helpFromConfig, enabled, command, usage);
+				String[] aliases, String name, String help,
+				PermissionType typePermission, ExecutedCommand command,
+				String usage) {
+			return api.new Command(label, arguments, aliases, name, help,
+					typePermission, command, usage);
 		}
 	}
 
@@ -285,29 +285,27 @@ public class StefsAPI {
 		String label;
 		String[] arguments;
 		String[] aliases;
-		String permission;
+		String name;
+		String help;
 		PermissionType typePermission;
-		String helpFromConfig;
-		String enabled;
 		ExecutedCommand command;
 		String usage;
 
 		public Command (String label, String[] arguments, String[] aliases,
-				String permission, PermissionType typePermission,
-				String helpFromConfig, String enabled, ExecutedCommand command,
-				String usage) {
+				String name, String help, PermissionType typePermission,
+				ExecutedCommand command, String usage) {
 			this.label = label;
 			this.arguments = arguments;
 			this.aliases = aliases;
-			this.permission = permission;
+			this.name = name;
+			this.help = help;
 			this.typePermission = typePermission;
-			this.helpFromConfig = "help." + helpFromConfig;
-			this.enabled = enabled;
 			this.command = command;
 			this.usage = usage;
 
 			ConfigHandler.addDefault(PLUGINNAME.config, "commandEnabled."
-					+ enabled, true);
+					+ name, true);
+			ConfigHandler.addDefault(PLUGINNAME.config, "help." + name, help);
 			commands.add(this);
 		}
 	}

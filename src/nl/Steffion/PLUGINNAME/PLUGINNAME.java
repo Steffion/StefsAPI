@@ -38,36 +38,35 @@ public class PLUGINNAME extends JavaPlugin implements Listener {
 		StefsAPI.ConfigHandler.addDefault(config, "chat.header_high",
 				"%H_______.[ %A%title%H ]._______");
 
-		StefsAPI.ConfigHandler.addDefault(config, "commandEnabled.info", true);
-		StefsAPI.ConfigHandler.addDefault(config, "commandEnabled.help", true);
-		StefsAPI.ConfigHandler
-				.addDefault(config, "commandEnabled.reload", true);
-
-		StefsAPI.ConfigHandler.addDefault(messages, "help.info",
-				"Displays the plugin's info.");
-		StefsAPI.ConfigHandler.addDefault(messages, "help.help",
-				"Shows a list of commands.");
-		StefsAPI.ConfigHandler.addDefault(messages, "help.reload",
-				"Reloads all configs.");
-
 		StefsAPI.CommandHandler.registerCommand(pdfFile.getName(), null, null,
-				"info", PermissionType.ALL, "info", "info",
+				"info", "Displays the plugin's info.", PermissionType.ALL,
+				new BasicCommands().new InfoCommand(), pdfFile.getName()
+						+ " [info/i]");
+		StefsAPI.CommandHandler.registerCommand(pdfFile.getName(),
+				new String[] { "info" }, new String[] { "i" }, "info",
+				"Displays the plugin's info.", PermissionType.ALL,
 				new BasicCommands().new InfoCommand(), pdfFile.getName()
 						+ " [info/i]");
 		StefsAPI.CommandHandler.registerCommand(pdfFile.getName(),
 				new String[] { "help" }, new String[] { "h" }, "help",
-				PermissionType.ALL, "help", "help",
+				"Shows a list of commands.", PermissionType.ALL,
 				new BasicCommands().new HelpCommand(), pdfFile.getName()
 						+ " <help/h> [page number]");
 		StefsAPI.CommandHandler.registerCommand(pdfFile.getName(),
 				new String[] { "reload" }, new String[] { "r" }, "reload",
-				PermissionType.MODERATOR, "reload", "reload",
+				"Reloads all configs.", PermissionType.MODERATOR,
 				new BasicCommands().new ReloadCommand(), pdfFile.getName()
 						+ " <reload/r>");
-		StefsAPI.CommandHandler.registerCommand("test", new String[] { "*" },
-				new String[] { "*" }, "test", PermissionType.ALL, "test",
-				"test", new BasicCommands().new InfoCommand(),
-				"test [random args]");
+		StefsAPI.CommandHandler
+				.registerCommand(
+						"test",
+						new String[] { "*" },
+						new String[] { "*" },
+						"test",
+						"This is a test command and can be removed from the main class. This is just a example command.",
+						PermissionType.ALL,
+						new BasicCommands().new InfoCommand(),
+						"test [random args]");
 
 		StefsAPI.ConfigHandler.addDefault(messages, "normal.reloadedConfigs",
 				"%TAG&aReloaded configs!");
@@ -155,9 +154,9 @@ public class PLUGINNAME extends JavaPlugin implements Listener {
 
 				if (equals) {
 					if (StefsAPI.PermissionHandler.hasPermission(player,
-							command.permission, command.typePermission, true)) {
+							command.name, command.typePermission, true)) {
 						if (config.getFile().getBoolean(
-								"commandEnabled." + command.enabled)) {
+								"commandEnabled." + command.name)) {
 							command.command.execute(player, playerName, cmd,
 									label, args);
 						} else {

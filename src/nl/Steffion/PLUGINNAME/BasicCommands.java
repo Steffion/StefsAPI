@@ -79,7 +79,7 @@ public class BasicCommands {
 					if (i <= 4) {
 						if (command.usage != null) {
 							if (StefsAPI.PermissionHandler.hasPermission(
-									player, command.permission,
+									player, command.name,
 									command.typePermission, false)) {
 								StefsAPI.MessageHandler
 										.buildMessage()
@@ -90,7 +90,8 @@ public class BasicCommands {
 														+ "%N - "
 														+ PLUGINNAME.messages
 																.getFile()
-																.get(command.helpFromConfig))
+																.get("help."
+																		+ command.name))
 										.build();
 							} else {
 								StefsAPI.MessageHandler
@@ -102,7 +103,8 @@ public class BasicCommands {
 														+ "%N - "
 														+ PLUGINNAME.messages
 																.getFile()
-																.get(command.helpFromConfig))
+																.get("help."
+																		+ command.name))
 										.build();
 							}
 
@@ -141,7 +143,7 @@ public class BasicCommands {
 							if (i >= ((page - 1) * 4) + 1
 									&& i <= ((page - 1) * 4) + 4) {
 								if (StefsAPI.PermissionHandler.hasPermission(
-										player, command.permission,
+										player, command.name,
 										command.typePermission, false)) {
 									StefsAPI.MessageHandler
 											.buildMessage()
@@ -152,7 +154,8 @@ public class BasicCommands {
 															+ "%N - "
 															+ PLUGINNAME.messages
 																	.getFile()
-																	.get(command.helpFromConfig))
+																	.get("help."
+																			+ command.name))
 											.build();
 								} else {
 									StefsAPI.MessageHandler
@@ -164,7 +167,8 @@ public class BasicCommands {
 															+ "%N - "
 															+ PLUGINNAME.messages
 																	.getFile()
-																	.get(command.helpFromConfig))
+																	.get("help."
+																			+ command.name))
 											.build();
 								}
 							}

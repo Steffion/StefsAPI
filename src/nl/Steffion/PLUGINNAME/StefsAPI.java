@@ -24,7 +24,7 @@ public class StefsAPI {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "5.0.3";
+	public static String engineVersion = "5.0.4";
 	public static String engineAuthors = "Steffion";
 
 	public static ArrayList<String> newConfigs = new ArrayList<String>();
@@ -86,8 +86,8 @@ public class StefsAPI {
 
 		public Config (String name) {
 			this.name = name;
-			this.file = new File("plugins/" + PLUGINNAME.pdfFile.getName(),
-					name + ".yml");
+			this.file = new File("plugins/" + PLUGINNAME.pdfFile.getName(), name
+					+ ".yml");
 			this.fileC = new YamlConfiguration();
 			this.checkFile(name);
 			this.fileCS = fileC.getConfigurationSection("");
@@ -97,8 +97,8 @@ public class StefsAPI {
 		public Config (String name, String location) {
 			this.name = name;
 			this.location = location;
-			this.file = new File("plugins/" + PLUGINNAME.pdfFile.getName()
-					+ "/" + location, name + ".yml");
+			this.file = new File("plugins/" + PLUGINNAME.pdfFile.getName() + "/"
+					+ location, name + ".yml");
 			this.fileC = new YamlConfiguration();
 			this.checkFile(name);
 			this.fileCS = fileC.getConfigurationSection("");
@@ -303,9 +303,9 @@ public class StefsAPI {
 			this.command = command;
 			this.usage = usage;
 
-			ConfigHandler.addDefault(PLUGINNAME.config, "commandEnabled."
-					+ name, true);
-			ConfigHandler.addDefault(PLUGINNAME.config, "help." + name, help);
+			ConfigHandler.addDefault(PLUGINNAME.config, "commandEnabled." + name,
+					true);
+			ConfigHandler.addDefault(PLUGINNAME.messages, "help." + name, help);
 			commands.add(this);
 		}
 	}
@@ -335,8 +335,7 @@ public class StefsAPI {
 					return true;
 				}
 			} else if (typePermission == PermissionType.MODERATOR) {
-				if (player.hasPermission(PLUGINNAME.mainPermission
-						+ "moderator")) {
+				if (player.hasPermission(PLUGINNAME.mainPermission + "moderator")) {
 					return true;
 				}
 			} else if (typePermission == PermissionType.PLAYER) {
@@ -361,7 +360,8 @@ public class StefsAPI {
 							.buildMessage()
 							.addSender(player.getName())
 							.setMessage("error.noPermission",
-									PLUGINNAME.messages).build();
+									PLUGINNAME.messages)
+							.build();
 				}
 			}
 

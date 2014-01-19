@@ -40,8 +40,7 @@ public class PLUGINNAME extends JavaPlugin implements Listener {
 
 		StefsAPI.CommandHandler.registerCommand(pdfFile.getName(), null, null,
 				"info", "Displays the plugin's info.", PermissionType.ALL,
-				new BasicCommands().new InfoCommand(), pdfFile.getName()
-						+ " [info/i]");
+				new BasicCommands().new InfoCommand(), null);
 		StefsAPI.CommandHandler.registerCommand(pdfFile.getName(),
 				new String[] { "info" }, new String[] { "i" }, "info",
 				"Displays the plugin's info.", PermissionType.ALL,

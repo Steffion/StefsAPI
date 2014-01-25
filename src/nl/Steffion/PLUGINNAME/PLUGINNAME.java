@@ -25,8 +25,8 @@ public class PLUGINNAME extends JavaPlugin implements Listener {
 
 		mainPermission = pdfFile.getName().toLowerCase() + ".";
 
-		config = StefsAPI.ConfigHandler.createConfig("config", "");
-		messages = StefsAPI.ConfigHandler.createConfig("messages", "");
+		config = StefsAPI.ConfigHandler.createConfig("config");
+		messages = StefsAPI.ConfigHandler.createConfig("messages");
 
 		StefsAPI.ConfigHandler.addDefault(config, "chat.tag",
 				"[" + pdfFile.getName() + "] ");

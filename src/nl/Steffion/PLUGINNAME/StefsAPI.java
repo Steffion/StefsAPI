@@ -24,7 +24,7 @@ public class StefsAPI {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "5.0.4";
+	public static String engineVersion = "5.0.5";
 	public static String engineAuthors = "Steffion";
 
 	public static ArrayList<String> newConfigs = new ArrayList<String>();
@@ -42,6 +42,10 @@ public class StefsAPI {
 
 	public static class ConfigHandler {
 		private static StefsAPI api = new StefsAPI();
+
+		public static Config createConfig(String name) {
+			return api.new Config(name);
+		}
 
 		public static Config createConfig(String name, String location) {
 			return api.new Config(name, location);
@@ -74,6 +78,8 @@ public class StefsAPI {
 								"%TAG%WUnable to find config file '%A" + file
 										+ ".yml%W', creating new one!").build();
 			}
+
+			newConfigs = new ArrayList<String>();
 		}
 	}
 
@@ -89,7 +95,7 @@ public class StefsAPI {
 			this.file = new File("plugins/" + PLUGINNAME.pdfFile.getName(), name
 					+ ".yml");
 			this.fileC = new YamlConfiguration();
-			this.checkFile(name);
+			this.checkFile(name, "");
 			this.fileCS = fileC.getConfigurationSection("");
 			this.load();
 		}
@@ -100,17 +106,17 @@ public class StefsAPI {
 			this.file = new File("plugins/" + PLUGINNAME.pdfFile.getName() + "/"
 					+ location, name + ".yml");
 			this.fileC = new YamlConfiguration();
-			this.checkFile(name);
+			this.checkFile(name, location + "/");
 			this.fileCS = fileC.getConfigurationSection("");
 			this.load();
 		}
 
-		public void checkFile(String name) {
+		public void checkFile(String name, String location) {
 			if (!this.file.exists()) {
 				try {
 					this.file.getParentFile().mkdirs();
 					this.file.createNewFile();
-					newConfigs.add(name);
+					newConfigs.add(location + name);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -126,7 +132,7 @@ public class StefsAPI {
 		}
 
 		public void load() {
-			this.checkFile(file.getName());
+			this.checkFile(file.getName(), this.location);
 			if (this.file.exists()) {
 				try {
 					this.fileC.load(this.file);

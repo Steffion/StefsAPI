@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.server.v1_7_R1.ChatSerializer;
+import net.minecraft.server.v1_7_R1.PacketPlayOutChat;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class StefsAPI {
@@ -24,7 +28,7 @@ public class StefsAPI {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "5.0.5";
+	public static String engineVersion = "5.0.6";
 	public static String engineAuthors = "Steffion";
 
 	public static ArrayList<String> newConfigs = new ArrayList<String>();
@@ -265,6 +269,184 @@ public class StefsAPI {
 						Player player = Bukkit.getPlayer(sender);
 						if (player != null) {
 							player.sendMessage(finalmessage);
+						}
+					}
+				}
+			}
+
+			this.replacements = new HashMap<String, String>();
+			return this;
+		}
+
+		// TODO Add possiblity to make buttons in chat.
+		public MessageBuilder buildAsJSON() {
+			for (String sender : this.senders) {
+				String message = this.message;
+				Config messages_config = this.message_config;
+				String finalmessage;
+
+				if (messages_config != null) {
+					if (messages_config.getFile().get(message) != null) {
+						finalmessage = (String) messages_config.getFile().get(
+								message);
+					} else {
+						finalmessage = "&9[" + PLUGINNAME.pdfFile.getName()
+								+ "] &cERROR: Message string &e" + message
+								+ "&c has not been found in the &e"
+								+ messages_config.name + ".yml&c config.";
+					}
+				} else {
+					finalmessage = message;
+				}
+
+				for (Map.Entry<String, String> replacement_pairs : this.replacements
+						.entrySet()) {
+					finalmessage = finalmessage.replaceAll("%"
+							+ replacement_pairs.getKey(),
+							replacement_pairs.getValue());
+				}
+
+				finalmessage = MessageHandler.replacePrefixes(finalmessage);
+
+				String[] texts = finalmessage.split(";");
+				String json = "{'text':'','extra':[";
+
+				for (int i = 0; i < texts.length; i++) {
+					String text = texts[i];
+					json += "{";
+					if (text.contains("&a")) {
+						text = text.replaceAll("&a", "");
+						json += "'color':'green',";
+					}
+
+					if (text.contains("&b")) {
+						text = text.replaceAll("&b", "");
+						json += "'color':'aqua',";
+					}
+
+					if (text.contains("&c")) {
+						text = text.replaceAll("&c", "");
+						json += "'color':'red',";
+					}
+
+					if (text.contains("&d")) {
+						text = text.replaceAll("&d", "");
+						json += "'color':'light_purple',";
+					}
+
+					if (text.contains("&e")) {
+						text = text.replaceAll("&e", "");
+						json += "'color':'yellow',";
+					}
+
+					if (text.contains("&f")) {
+						text = text.replaceAll("&f", "");
+						json += "'color':'white',";
+					}
+
+					if (text.contains("&0")) {
+						text = text.replaceAll("&0", "");
+						json += "'color':'black',";
+					}
+
+					if (text.contains("&1")) {
+						text = text.replaceAll("&1", "");
+						json += "'color':'dark_blue',";
+					}
+
+					if (text.contains("&2")) {
+						text = text.replaceAll("&2", "");
+						json += "'color':'dark_green',";
+					}
+
+					if (text.contains("&3")) {
+						text = text.replaceAll("&3", "");
+						json += "'color':'dark_aqua',";
+					}
+
+					if (text.contains("&4")) {
+						text = text.replaceAll("&4", "");
+						json += "'color':'dark_red',";
+					}
+
+					if (text.contains("&5")) {
+						text = text.replaceAll("&5", "");
+						json += "'color':'dark_purple',";
+					}
+
+					if (text.contains("&6")) {
+						text = text.replaceAll("&6", "");
+						json += "'color':'gold',";
+					}
+
+					if (text.contains("&7")) {
+						text = text.replaceAll("&7", "");
+						json += "'color':'gray',";
+					}
+
+					if (text.contains("&8")) {
+						text = text.replaceAll("&8", "");
+						json += "'color':'dark_gray',";
+					}
+
+					if (text.contains("&9")) {
+						text = text.replaceAll("&9", "");
+						json += "'color':'blue',";
+					}
+
+					if (text.contains("&k")) {
+						text = text.replaceAll("&k", "");
+						json += "'obfuscated':'true',";
+					}
+
+					if (text.contains("&l")) {
+						text = text.replaceAll("&l", "");
+						json += "'bold':'true',";
+					}
+
+					if (text.contains("&m")) {
+						text = text.replaceAll("&m", "");
+						json += "'strikethrough':'true',";
+					}
+
+					if (text.contains("&n")) {
+						text = text.replaceAll("&n", "");
+						json += "'underlined':'true',";
+					}
+
+					if (text.contains("&o")) {
+						text = text.replaceAll("&o", "");
+						json += "'italic':'true',";
+					}
+
+					if (texts.length - 1 == i) {
+						json += "'text':'" + text + "'}]}";
+					} else {
+						json += "'text':'" + text + "'},";
+					}
+				}
+
+				if (sender == "*") {
+					for (Player player : Bukkit.getOnlinePlayers()) {
+						try {
+							((CraftPlayer) player).getHandle().playerConnection
+									.sendPacket(new PacketPlayOutChat(
+											ChatSerializer.a(json), true));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else if (sender == "$") {
+					Bukkit.getConsoleSender().sendMessage(json);
+				} else {
+					Player player = Bukkit.getPlayer(sender);
+					if (player != null) {
+						try {
+							((CraftPlayer) player).getHandle().playerConnection
+									.sendPacket(new PacketPlayOutChat(
+											ChatSerializer.a(json), true));
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 					}
 				}

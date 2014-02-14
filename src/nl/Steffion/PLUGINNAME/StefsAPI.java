@@ -28,7 +28,7 @@ public class StefsAPI {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "5.0.6";
+	public static String engineVersion = "5.0.7";
 	public static String engineAuthors = "Steffion";
 
 	public static ArrayList<String> newConfigs = new ArrayList<String>();
@@ -278,7 +278,6 @@ public class StefsAPI {
 			return this;
 		}
 
-		// TODO Add possiblity to make buttons in chat.
 		public MessageBuilder buildAsJSON() {
 			for (String sender : this.senders) {
 				String message = this.message;
@@ -314,6 +313,139 @@ public class StefsAPI {
 				for (int i = 0; i < texts.length; i++) {
 					String text = texts[i];
 					json += "{";
+
+					if (text.contains("**")) {
+						String runcommand = text
+								.substring(text.indexOf("**") + 2);
+						runcommand = runcommand.substring(0,
+								runcommand.indexOf("**"));
+
+						text = text.replaceAll(
+								"\\*\\*" + runcommand + "\\*\\*", "");
+
+						json += "'clickEvent': {'action':'run_command','value':'"
+								+ runcommand + "'},";
+					}
+
+					if (text.contains("__")) {
+						String hovermessage = text
+								.substring(text.indexOf("__") + 2);
+						hovermessage = hovermessage.substring(0,
+								hovermessage.indexOf("__"));
+
+						text = text.replaceAll("__" + hovermessage + "__", "");
+
+						json += "'hoverEvent': {";
+
+						if (hovermessage.contains("&a")) {
+							hovermessage = hovermessage.replaceAll("&a", "");
+							json += "'color':'green',";
+						}
+
+						if (hovermessage.contains("&b")) {
+							hovermessage = hovermessage.replaceAll("&b", "");
+							json += "'color':'aqua',";
+						}
+
+						if (hovermessage.contains("&c")) {
+							hovermessage = hovermessage.replaceAll("&c", "");
+							json += "'color':'red',";
+						}
+
+						if (hovermessage.contains("&d")) {
+							hovermessage = hovermessage.replaceAll("&d", "");
+							json += "'color':'light_purple',";
+						}
+
+						if (hovermessage.contains("&e")) {
+							hovermessage = hovermessage.replaceAll("&e", "");
+							json += "'color':'yellow',";
+						}
+
+						if (hovermessage.contains("&f")) {
+							hovermessage = hovermessage.replaceAll("&f", "");
+							json += "'color':'white',";
+						}
+
+						if (hovermessage.contains("&0")) {
+							hovermessage = hovermessage.replaceAll("&0", "");
+							json += "'color':'black',";
+						}
+
+						if (hovermessage.contains("&1")) {
+							hovermessage = hovermessage.replaceAll("&1", "");
+							json += "'color':'dark_blue',";
+						}
+
+						if (hovermessage.contains("&2")) {
+							hovermessage = hovermessage.replaceAll("&2", "");
+							json += "'color':'dark_green',";
+						}
+
+						if (hovermessage.contains("&3")) {
+							hovermessage = hovermessage.replaceAll("&3", "");
+							json += "'color':'dark_aqua',";
+						}
+
+						if (hovermessage.contains("&4")) {
+							hovermessage = hovermessage.replaceAll("&4", "");
+							json += "'color':'dark_red',";
+						}
+
+						if (hovermessage.contains("&5")) {
+							hovermessage = hovermessage.replaceAll("&5", "");
+							json += "'color':'dark_purple',";
+						}
+
+						if (hovermessage.contains("&6")) {
+							hovermessage = hovermessage.replaceAll("&6", "");
+							json += "'color':'gold',";
+						}
+
+						if (hovermessage.contains("&7")) {
+							hovermessage = hovermessage.replaceAll("&7", "");
+							json += "'color':'gray',";
+						}
+
+						if (hovermessage.contains("&8")) {
+							hovermessage = hovermessage.replaceAll("&8", "");
+							json += "'color':'dark_gray',";
+						}
+
+						if (hovermessage.contains("&9")) {
+							hovermessage = hovermessage.replaceAll("&9", "");
+							json += "'color':'blue',";
+						}
+
+						if (hovermessage.contains("&k")) {
+							hovermessage = hovermessage.replaceAll("&k", "");
+							json += "'obfuscated':'true',";
+						}
+
+						if (hovermessage.contains("&l")) {
+							hovermessage = hovermessage.replaceAll("&l", "");
+							json += "'bold':'true',";
+						}
+
+						if (hovermessage.contains("&m")) {
+							hovermessage = hovermessage.replaceAll("&m", "");
+							json += "'strikethrough':'true',";
+						}
+
+						if (hovermessage.contains("&n")) {
+							hovermessage = hovermessage.replaceAll("&n", "");
+							json += "'underlined':'true',";
+						}
+
+						if (hovermessage.contains("&o")) {
+							hovermessage = hovermessage.replaceAll("&o", "");
+							json += "'italic':'true',";
+						}
+
+						json += "'action':'show_text','value':'" + hovermessage
+								+ "'},";
+					}
+
 					if (text.contains("&a")) {
 						text = text.replaceAll("&a", "");
 						json += "'color':'green',";
